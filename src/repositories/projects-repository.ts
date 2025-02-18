@@ -20,14 +20,42 @@ class ProjectRepositoryPrisma implements ProjectRepository {
     return result;
   }
 
-  async findAllProject(search?: string): Promise<Project[] | null> {
-    const whereCondition =
-      !search || search.trim() === "" || search === "undefined"
-        ? {}
-        : { name: { contains: search, mode: "insensitive" as "insensitive" } };
+  async findAllProject(
+    search: string,
+    filter: string
+  ): Promise<Project[] | null> {
+    const whereCondition: any = {};
+
+    // Verificar o parâmetro de filtro (filter)
+    if (filter) {
+      switch (filter) {
+        case "1h":
+          whereCondition.createdAt = {
+            gte: new Date(Date.now() - 60 * 60 * 1000),
+          }; // Filtra projetos criados nas últimas 1 hora
+          break;
+        case "1d":
+          whereCondition.createdAt = {
+            gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
+          }; // Filtra projetos criados no último dia
+          break;
+        case "1w":
+          whereCondition.createdAt = {
+            gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          }; // Filtra projetos criados na última semana
+          break;
+        default:
+          break;
+      }
+    }
 
     const result = await prisma.project.findMany({
-      where: whereCondition,
+      where: {
+        name: {
+          contains: search,
+        },
+        createdAt: whereCondition.createdAt,
+      },
     });
 
     return result;

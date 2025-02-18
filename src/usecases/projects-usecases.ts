@@ -30,8 +30,11 @@ class ProjectUseCase {
     return result;
   }
 
-  async findAllProject(search: string): Promise<Project[] | null> {
-    const result = await this.projectRepository.findAllProject(search);
+  async findAllProject(
+    search: string,
+    filter: string
+  ): Promise<Project[] | null> {
+    const result = await this.projectRepository.findAllProject(search, filter);
 
     return result;
   }

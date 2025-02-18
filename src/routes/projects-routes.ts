@@ -30,10 +30,13 @@ export async function projectRoutes(fastify: FastifyInstance) {
   );
 
   fastify.get("/", async (request, reply) => {
-    const { search } = request.query as { search: string };
+    const { search, filter } = request.query as {
+      search: string;
+      filter: string;
+    };
 
     try {
-      const result = await projectUseCase.findAllProject(search);
+      const result = await projectUseCase.findAllProject(search, filter);
       return reply.status(200).send(result);
     } catch (error) {
       return reply.status(500).send(error);

@@ -19,6 +19,6 @@ export interface ProjectCreate {
 
 export interface ProjectRepository {
   create(data: ProjectCreate): Promise<Project>;
-  findAllProject(search: string): Promise<Project[] | null>;
+  findAllProject(search: string, filter: string): Promise<Project[] | null>;
   findProjectById(id: string): Promise<Project | null>;
 }
