@@ -32,9 +32,19 @@ class ProjectUseCase {
 
   async findAllProject(
     search: string,
-    filter: string
+    filter: string,
+    page: string,
+    limit: string
   ): Promise<Project[] | null> {
-    const result = await this.projectRepository.findAllProject(search, filter);
+    const numberPage = Number(page);
+    const numberLimit = Number(limit);
+
+    const result = await this.projectRepository.findAllProject(
+      search,
+      filter,
+      numberPage,
+      numberLimit
+    );
 
     return result;
   }

@@ -22,7 +22,9 @@ class ProjectRepositoryPrisma implements ProjectRepository {
 
   async findAllProject(
     search: string,
-    filter: string
+    filter: string,
+    page: number,
+    limit: number
   ): Promise<Project[] | null> {
     const whereCondition: any = {};
 
@@ -32,17 +34,17 @@ class ProjectRepositoryPrisma implements ProjectRepository {
         case "1h":
           whereCondition.createdAt = {
             gte: new Date(Date.now() - 60 * 60 * 1000),
-          }; // Filtra projetos criados nas últimas 1 hora
+          };
           break;
         case "1d":
           whereCondition.createdAt = {
             gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
-          }; // Filtra projetos criados no último dia
+          };
           break;
         case "1w":
           whereCondition.createdAt = {
             gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-          }; // Filtra projetos criados na última semana
+          };
           break;
         default:
           break;
@@ -53,8 +55,14 @@ class ProjectRepositoryPrisma implements ProjectRepository {
       where: {
         name: {
           contains: search,
+          mode: "insensitive", // Torna a pesquisa case-insensitive
         },
         createdAt: whereCondition.createdAt,
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        createdAt: "desc",
       },
     });
 

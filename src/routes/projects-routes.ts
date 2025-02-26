@@ -29,14 +29,23 @@ export async function projectRoutes(fastify: FastifyInstance) {
     }
   );
 
-  fastify.get("/", async (request, reply) => {
-    const { search, filter } = request.query as {
+  fastify.get<{
+    Querystring: {
       search: string;
       filter: string;
+      page: string;
+      limit: string;
     };
-
+  }>("/", async (request, reply) => {
+    const { search, filter, page, limit } = request.query;
+    
     try {
-      const result = await projectUseCase.findAllProject(search, filter);
+      const result = await projectUseCase.findAllProject(
+        search,
+        filter,
+        page,
+        limit
+      );
       return reply.status(200).send(result);
     } catch (error) {
       return reply.status(500).send(error);
