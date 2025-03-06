@@ -6,10 +6,10 @@ export async function userRoutes(fastify: FastifyInstance) {
   const userUseCase = new UserUseCase();
 
   fastify.post<{ Body: UserCreate }>("/", async (request, reply) => {
-    const { email, password } = request.body;
+    const { name, email, password } = request.body;
 
     try {
-      const result = await userUseCase.create({ email, password });
+      const result = await userUseCase.create({ name, email, password });
       return reply.status(201).send(result);
     } catch (error) {
       return reply.status(500).send(error);

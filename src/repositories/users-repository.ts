@@ -10,6 +10,7 @@ class UserRepositoryPrisma implements UserRepository {
   async create(data: UserCreate): Promise<User> {
     const result = await prisma.user.create({
       data: {
+        name: data.name,
         email: data.email,
         password: data.password,
       },

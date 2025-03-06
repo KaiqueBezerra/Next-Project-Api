@@ -14,7 +14,7 @@ class UserUseCase {
     this.userRepository = new UserRepositoryPrisma();
   }
 
-  async create({ email, password }: UserCreate): Promise<User> {
+  async create({ name, email, password }: UserCreate): Promise<User> {
     const userVeriryExists = await this.userRepository.findUserByEmail(email);
 
     if (userVeriryExists) {
@@ -24,6 +24,7 @@ class UserUseCase {
     const hashedPassword = await AuthService.hashPassword(password);
 
     const result = await this.userRepository.create({
+      name,
       email,
       password: hashedPassword,
     });
