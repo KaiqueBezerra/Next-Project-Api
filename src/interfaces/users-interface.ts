@@ -14,6 +14,7 @@ export interface UserCreate {
 
 export interface UserGet {
   id: string;
+  name: string;
   email: string;
   createdAt: Date;
   updatedAt: Date;

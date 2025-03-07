@@ -36,6 +36,7 @@ class UserRepositoryPrisma implements UserRepository {
       },
       select: {
         id: true,
+        name: true,
         email: true,
         createdAt: true,
         updatedAt: true,
