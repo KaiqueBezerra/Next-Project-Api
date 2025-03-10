@@ -21,7 +21,8 @@ export interface UserGet {
 }
 
 export interface UserRepository {
-  create(data: UserCreate): Promise<User>;
+  createUser(data: UserCreate): Promise<User>;
   findUserByEmail(email: string): Promise<User | null>;
   findUserById(id: string): Promise<UserGet | null>;
+  updateUser(id: string, name: string): Promise<UserGet | null>;
 }

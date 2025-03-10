@@ -7,7 +7,7 @@ import {
 } from "../interfaces/users-interface";
 
 class UserRepositoryPrisma implements UserRepository {
-  async create(data: UserCreate): Promise<User> {
+  async createUser(data: UserCreate): Promise<User> {
     const result = await prisma.user.create({
       data: {
         name: data.name,
@@ -33,6 +33,26 @@ class UserRepositoryPrisma implements UserRepository {
     const result = await prisma.user.findFirst({
       where: {
         id: id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return result;
+  }
+
+  async updateUser(id: string, name: string): Promise<UserGet | null> {
+    const result = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: name,
       },
       select: {
         id: true,

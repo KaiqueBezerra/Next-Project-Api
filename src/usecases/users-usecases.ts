@@ -14,7 +14,7 @@ class UserUseCase {
     this.userRepository = new UserRepositoryPrisma();
   }
 
-  async create({ name, email, password }: UserCreate): Promise<User> {
+  async createUser({ name, email, password }: UserCreate): Promise<User> {
     const userVeriryExists = await this.userRepository.findUserByEmail(email);
 
     if (userVeriryExists) {
@@ -23,7 +23,7 @@ class UserUseCase {
 
     const hashedPassword = await AuthService.hashPassword(password);
 
-    const result = await this.userRepository.create({
+    const result = await this.userRepository.createUser({
       name,
       email,
       password: hashedPassword,
@@ -32,7 +32,7 @@ class UserUseCase {
     return result;
   }
 
-  async findUserByEmail(email: string): Promise<UserGet | null> {
+  async findUserByEmail(email: string): Promise<User | null> {
     const result = await this.userRepository.findUserByEmail(email);
 
     if (!result) {
@@ -44,6 +44,16 @@ class UserUseCase {
 
   async findUserById(id: string): Promise<UserGet | null> {
     const result = await this.userRepository.findUserById(id);
+
+    if (!result) {
+      throw new Error("Usuário não encontrado.");
+    }
+
+    return result;
+  }
+
+  async updateUser(id: string, name: string): Promise<UserGet | null> {
+    const result = await this.userRepository.updateUser(id, name);
 
     if (!result) {
       throw new Error("Usuário não encontrado.");
