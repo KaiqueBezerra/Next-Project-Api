@@ -64,6 +64,9 @@ class ProjectRepositoryPrisma implements ProjectRepository {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        Favorite: true,
+      },
     });
 
     return result;
@@ -72,6 +75,9 @@ class ProjectRepositoryPrisma implements ProjectRepository {
   async findProjectById(id: string): Promise<Project | null> {
     const result = await prisma.project.findUnique({
       where: { id },
+      include: {
+        Favorite: true,
+      },
     });
 
     return result;

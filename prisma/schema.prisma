@@ -16,6 +16,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   projects Project[]
+  Favorite Favorite[]
 
   @@map("users")
 }
@@ -29,8 +30,22 @@ model Project {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  userId String
-  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  User     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Favorite Favorite[]
 
   @@map("projects")
+}
+
+model Favorite {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String
+  Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("favorites")
 }
