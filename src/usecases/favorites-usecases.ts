@@ -21,6 +21,19 @@ class FavoriteUseCase {
 
     return result;
   }
+
+  async deleteFavorite({ userId, projectId }: AddFavorite): Promise<void> {
+    await this.favoriteRepository.deleteFavorite({ userId, projectId });
+  }
+
+  async favoritesVerify(userId: string, projectId: string): Promise<boolean> {
+    const result = await this.favoriteRepository.favoritesVerify(
+      userId,
+      projectId
+    );
+
+    return result;
+  }
 }
 
 export { FavoriteUseCase };
