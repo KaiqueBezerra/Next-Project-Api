@@ -17,6 +17,11 @@ export interface ProjectCreate {
   userId: string;
 }
 
+export interface ProjectGet {
+  project: Project | null;
+  favoriteCount: number;
+}
+
 export interface ProjectRepository {
   create(data: ProjectCreate): Promise<Project>;
   findAllProject(
@@ -25,5 +30,5 @@ export interface ProjectRepository {
     page: number,
     limit: number
   ): Promise<Project[] | null>;
-  findProjectById(id: string): Promise<Project | null>;
+  findProjectById(id: string): Promise<ProjectGet>;
 }

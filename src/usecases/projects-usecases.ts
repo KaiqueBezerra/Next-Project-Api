@@ -52,6 +52,10 @@ class ProjectUseCase {
   async findProjectById(id: string): Promise<Project | null> {
     const result = await this.projectRepository.findProjectById(id);
 
+    if (!result) {
+      throw new Error("Projeto nao encontrado.");
+    }
+
     return result;
   }
 }

@@ -34,7 +34,7 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
           userId,
           projectId,
         });
-        return reply.status(200);
+        return reply.status(200).send();
       } catch (error) {
         return reply.status(500).send(error);
       }

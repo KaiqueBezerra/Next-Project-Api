@@ -2,6 +2,7 @@ import { prisma } from "../db/prisma-client";
 import {
   Project,
   ProjectCreate,
+  ProjectGet,
   ProjectRepository,
 } from "../interfaces/projects-interface";
 
@@ -69,12 +70,16 @@ class ProjectRepositoryPrisma implements ProjectRepository {
     return result;
   }
 
-  async findProjectById(id: string): Promise<Project | null> {
+  async findProjectById(id: string): Promise<ProjectGet> {
     const result = await prisma.project.findUnique({
       where: { id },
     });
 
-    return result;
+    const favoriteCount = await prisma.favorite.count({
+      where: { projectId: id },
+    });
+
+    return { project: result, favoriteCount };
   }
 }
 
