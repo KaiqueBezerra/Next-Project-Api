@@ -41,6 +41,17 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
     }
   );
 
+  fastify.get("/", { preHandler: authMiddleware }, async (request, reply) => {
+    const { id: userId } = request.user as { id: string };
+
+    try {
+      const result = await favoriteUseCase.findFavoritesByUserId(userId);
+      return reply.status(200).send(result);
+    } catch (error) {
+      return reply.status(500).send(error);
+    }
+  });
+
   fastify.get<{ Params: { projectId: string } }>(
     "/:projectId",
     { preHandler: authMiddleware },

@@ -4,6 +4,7 @@ import {
   AddFavorite,
   Favorite,
   FavoriteRepository,
+  GetFavorite,
 } from "../interfaces/favorites.interface";
 
 class FavoriteUseCase {
@@ -24,6 +25,12 @@ class FavoriteUseCase {
 
   async deleteFavorite({ userId, projectId }: AddFavorite): Promise<void> {
     await this.favoriteRepository.deleteFavorite({ userId, projectId });
+  }
+
+  async findFavoritesByUserId(userId: string): Promise<GetFavorite[]> {
+    const result = await this.favoriteRepository.findFavoritesByUserId(userId);
+
+    return result;
   }
 
   async favoritesVerify(userId: string, projectId: string): Promise<boolean> {

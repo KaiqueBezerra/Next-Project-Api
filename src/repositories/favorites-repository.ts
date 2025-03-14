@@ -3,6 +3,7 @@ import {
   AddFavorite,
   Favorite,
   FavoriteRepository,
+  GetFavorite,
 } from "../interfaces/favorites.interface";
 
 class FavoriteRepositoryPrisma implements FavoriteRepository {
@@ -24,6 +25,28 @@ class FavoriteRepositoryPrisma implements FavoriteRepository {
         projectId: data.projectId,
       },
     });
+  }
+
+  async findFavoritesByUserId(userId: string): Promise<GetFavorite[]> {
+    const result = await prisma.favorite.findMany({
+      where: {
+        userId: userId,
+      },
+      select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        projectId: true,
+        Project: {
+          select: {
+            name: true,
+            description: true,
+          },
+        },
+      },
+    });
+
+    return result;
   }
 
   async favoritesVerify(userId: string, projectId: string): Promise<boolean> {
