@@ -1,6 +1,7 @@
 import {
   Project,
   ProjectCreate,
+  ProjectGet,
   ProjectRepository,
 } from "../interfaces/projects-interface";
 import { ProjectRepositoryPrisma } from "../repositories/projects-repository";
@@ -49,11 +50,21 @@ class ProjectUseCase {
     return result;
   }
 
-  async findProjectById(id: string): Promise<Project | null> {
+  async findProjectById(id: string): Promise<ProjectGet> {
     const result = await this.projectRepository.findProjectById(id);
 
     if (!result) {
-      throw new Error("Projeto nao encontrado.");
+      throw new Error("Projeto não encontrado.");
+    }
+
+    return result;
+  }
+
+  async findProjectByUserId(userId: string): Promise<Project[]> {
+    const result = await this.projectRepository.findProjectByUserId(userId);
+
+    if (!result) {
+      throw new Error("Projetos não encontrados.");
     }
 
     return result;

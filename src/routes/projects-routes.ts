@@ -38,7 +38,7 @@ export async function projectRoutes(fastify: FastifyInstance) {
     };
   }>("/", async (request, reply) => {
     const { search, filter, page, limit } = request.query;
-    
+
     try {
       const result = await projectUseCase.findAllProject(
         search,
@@ -57,6 +57,17 @@ export async function projectRoutes(fastify: FastifyInstance) {
 
     try {
       const result = await projectUseCase.findProjectById(id);
+      return reply.status(200).send(result);
+    } catch (error) {
+      return reply.status(500).send(error);
+    }
+  });
+
+  fastify.get("/user", { preHandler: authMiddleware }, async (request, reply) => {
+    const { id: userId } = request.user as { id: string };
+
+    try {
+      const result = await projectUseCase.findProjectByUserId(userId);
       return reply.status(200).send(result);
     } catch (error) {
       return reply.status(500).send(error);

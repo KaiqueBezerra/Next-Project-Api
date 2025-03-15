@@ -81,6 +81,14 @@ class ProjectRepositoryPrisma implements ProjectRepository {
 
     return { project: result, favoriteCount };
   }
+
+  async findProjectByUserId(userId: string): Promise<Project[]> {
+    const result = await prisma.project.findMany({
+      where: { userId },
+    });
+
+    return result;
+  }
 }
 
 export { ProjectRepositoryPrisma };
