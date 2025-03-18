@@ -73,7 +73,37 @@ export async function projectRoutes(fastify: FastifyInstance) {
     const { page, limit } = request.query;
 
     try {
-      const result = await projectUseCase.findProjectByUserId(userId, page, limit);
+      const result = await projectUseCase.findProjectByUserId(
+        userId,
+        page,
+        limit
+      );
+      return reply.status(200).send(result);
+    } catch (error) {
+      return reply.status(500).send(error);
+    }
+  });
+
+  fastify.put<{
+    Body: {
+      name: string;
+      description: string;
+      requirements: string[];
+      phoneNumber: string;
+    };
+  }>("/:id", { preHandler: authMiddleware }, async (request, reply) => {
+    const { id: userId } = request.user as { id: string };
+    const { id } = request.params as { id: string };
+    const { name, description, requirements, phoneNumber } = request.body;
+
+    try {
+      const result = await projectUseCase.update(id, {
+        name,
+        description,
+        requirements,
+        phoneNumber,
+        userId,
+      });
       return reply.status(200).send(result);
     } catch (error) {
       return reply.status(500).send(error);

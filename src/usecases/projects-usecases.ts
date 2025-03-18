@@ -80,6 +80,22 @@ class ProjectUseCase {
 
     return result;
   }
+
+  async update(id: string, data: ProjectCreate): Promise<Project> {
+    const project = await this.projectRepository.findProjectById(id);
+
+    if (project.project?.userId === data.userId) {
+      const result = await this.projectRepository.update(id, data);
+
+      if (!result) {
+        throw new Error("Projeto não encontrado.");
+      }
+
+      return result;
+    } else {
+      throw new Error("Usuário nao autorizado.");
+    }
+  }
 }
 
 export { ProjectUseCase };

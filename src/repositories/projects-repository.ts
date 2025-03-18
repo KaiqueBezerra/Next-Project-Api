@@ -87,11 +87,24 @@ class ProjectRepositoryPrisma implements ProjectRepository {
     page: number,
     limit: number
   ): Promise<Project[]> {
-
     const result = await prisma.project.findMany({
       where: { userId },
       skip: (page - 1) * limit,
       take: limit,
+    });
+
+    return result;
+  }
+
+  async update(id: string, data: ProjectCreate): Promise<Project | null> {
+    const result = await prisma.project.update({
+      where: { id },
+      data: {
+        name: data.name,
+        description: data.description,
+        requirements: data.requirements,
+        phoneNumber: data.phoneNumber,
+      },
     });
 
     return result;
