@@ -31,5 +31,9 @@ export interface ProjectRepository {
     limit: number
   ): Promise<Project[] | null>;
   findProjectById(id: string): Promise<ProjectGet>;
-  findProjectByUserId(userId: string): Promise<Project[]>;
+  findProjectByUserId(
+    userId: string,
+    page: number,
+    limit: number
+  ): Promise<Project[]>;
 }

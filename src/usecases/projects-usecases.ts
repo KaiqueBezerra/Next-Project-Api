@@ -60,8 +60,19 @@ class ProjectUseCase {
     return result;
   }
 
-  async findProjectByUserId(userId: string): Promise<Project[]> {
-    const result = await this.projectRepository.findProjectByUserId(userId);
+  async findProjectByUserId(
+    userId: string,
+    page: string,
+    limit: string
+  ): Promise<Project[]> {
+    const numberPage = Number(page);
+    const numberLimit = Number(limit);
+
+    const result = await this.projectRepository.findProjectByUserId(
+      userId,
+      numberPage,
+      numberLimit
+    );
 
     if (!result) {
       throw new Error("Projetos não encontrados.");

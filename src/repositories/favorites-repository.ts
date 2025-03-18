@@ -39,6 +39,7 @@ class FavoriteRepositoryPrisma implements FavoriteRepository {
         projectId: true,
         Project: {
           select: {
+            id: true,
             name: true,
             description: true,
           },
