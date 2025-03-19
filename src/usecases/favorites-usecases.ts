@@ -5,7 +5,7 @@ import {
   Favorite,
   FavoriteRepository,
   GetFavorite,
-} from "../interfaces/favorites.interface";
+} from "../interfaces/favorites-interface";
 
 class FavoriteUseCase {
   private favoriteRepository: FavoriteRepository;

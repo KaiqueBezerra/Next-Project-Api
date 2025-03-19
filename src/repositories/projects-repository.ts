@@ -89,6 +89,9 @@ class ProjectRepositoryPrisma implements ProjectRepository {
       where: { userId },
       skip: (page - 1) * limit,
       take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return result;

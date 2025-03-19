@@ -17,6 +17,7 @@ model User {
 
   projects Project[]
   Favorite Favorite[]
+  Report   Report[]
 
   @@map("users")
 }
@@ -33,6 +34,7 @@ model Project {
   userId   String
   User     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   Favorite Favorite[]
+  Report   Report[]
 
   @@map("projects")
 }
@@ -48,4 +50,18 @@ model Favorite {
   Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@map("favorites")
+}
+
+model Report {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String
+  Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  comment   String
+
+  @@map("reports")
 }

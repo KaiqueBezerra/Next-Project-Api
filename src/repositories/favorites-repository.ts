@@ -4,7 +4,7 @@ import {
   Favorite,
   FavoriteRepository,
   GetFavorite,
-} from "../interfaces/favorites.interface";
+} from "../interfaces/favorites-interface";
 
 class FavoriteRepositoryPrisma implements FavoriteRepository {
   async addFavorite(data: AddFavorite): Promise<void> {
