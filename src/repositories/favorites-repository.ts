@@ -7,15 +7,13 @@ import {
 } from "../interfaces/favorites.interface";
 
 class FavoriteRepositoryPrisma implements FavoriteRepository {
-  async addFavorite(data: AddFavorite): Promise<Favorite> {
-    const result = await prisma.favorite.create({
+  async addFavorite(data: AddFavorite): Promise<void> {
+    await prisma.favorite.create({
       data: {
         userId: data.userId,
         projectId: data.projectId,
       },
     });
-
-    return result;
   }
 
   async deleteFavorite(data: AddFavorite): Promise<void> {

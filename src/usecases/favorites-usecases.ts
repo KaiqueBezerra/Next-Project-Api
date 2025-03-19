@@ -14,13 +14,11 @@ class FavoriteUseCase {
     this.favoriteRepository = new FavoriteRepositoryPrisma();
   }
 
-  async addFavorite({ userId, projectId }: AddFavorite): Promise<Favorite> {
-    const result = await this.favoriteRepository.addFavorite({
+  async addFavorite({ userId, projectId }: AddFavorite): Promise<void> {
+    await this.favoriteRepository.addFavorite({
       userId,
       projectId,
     });
-
-    return result;
   }
 
   async deleteFavorite({ userId, projectId }: AddFavorite): Promise<void> {

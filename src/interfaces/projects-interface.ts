@@ -23,7 +23,7 @@ export interface ProjectGet {
 }
 
 export interface ProjectRepository {
-  create(data: ProjectCreate): Promise<Project>;
+  createProject(data: ProjectCreate): Promise<void>;
   findAllProject(
     search: string,
     filter: string,
@@ -36,5 +36,5 @@ export interface ProjectRepository {
     page: number,
     limit: number
   ): Promise<Project[]>;
-  update(id: string, data: ProjectCreate): Promise<Project | null>;
+  updateProject(id: string, data: ProjectCreate): Promise<Project | null>;
 }

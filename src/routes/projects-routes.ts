@@ -14,7 +14,7 @@ export async function projectRoutes(fastify: FastifyInstance) {
       const { id: userId } = request.user as { id: string };
 
       try {
-        const result = await projectUseCase.create({
+        await projectUseCase.createProject({
           name,
           description,
           requirements,
@@ -22,7 +22,7 @@ export async function projectRoutes(fastify: FastifyInstance) {
           phoneNumber,
         });
 
-        return reply.status(201).send(result);
+        return reply.status(201).send();
       } catch (error) {
         return reply.status(500).send(error);
       }
@@ -97,7 +97,7 @@ export async function projectRoutes(fastify: FastifyInstance) {
     const { name, description, requirements, phoneNumber } = request.body;
 
     try {
-      const result = await projectUseCase.update(id, {
+      const result = await projectUseCase.updateProject(id, {
         name,
         description,
         requirements,

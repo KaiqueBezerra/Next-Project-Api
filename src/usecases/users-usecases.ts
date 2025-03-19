@@ -14,7 +14,7 @@ class UserUseCase {
     this.userRepository = new UserRepositoryPrisma();
   }
 
-  async createUser({ name, email, password }: UserCreate): Promise<User> {
+  async createUser({ name, email, password }: UserCreate): Promise<void> {
     const userVeriryExists = await this.userRepository.findUserByEmail(email);
 
     if (userVeriryExists) {
@@ -23,13 +23,11 @@ class UserUseCase {
 
     const hashedPassword = await AuthService.hashPassword(password);
 
-    const result = await this.userRepository.createUser({
+    await this.userRepository.createUser({
       name,
       email,
       password: hashedPassword,
     });
-
-    return result;
   }
 
   async findUserByEmail(email: string): Promise<User | null> {
@@ -60,6 +58,10 @@ class UserUseCase {
     }
 
     return result;
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    const result = await this.userRepository.deleteUser(id);
   }
 
   async authenticate(email: string, password: string): Promise<string> {

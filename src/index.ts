@@ -6,7 +6,7 @@ import { authRoutes } from "./routes/auth-routes";
 import { favoritesRoutes } from "./routes/favorites-routes";
 
 const app: FastifyInstance = fastify({
-  logger: true,
+  // logger: true,
 });
 
 app.register(fastifyCors, { origin: "*" });

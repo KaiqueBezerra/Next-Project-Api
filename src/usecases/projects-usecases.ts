@@ -13,22 +13,20 @@ class ProjectUseCase {
     this.projectRepository = new ProjectRepositoryPrisma();
   }
 
-  async create({
+  async createProject({
     name,
     description,
     requirements,
     userId,
     phoneNumber,
-  }: ProjectCreate): Promise<Project> {
-    const result = await this.projectRepository.create({
+  }: ProjectCreate): Promise<void> {
+    await this.projectRepository.createProject({
       name,
       description,
       requirements,
       userId,
       phoneNumber,
     });
-
-    return result;
   }
 
   async findAllProject(
@@ -81,11 +79,11 @@ class ProjectUseCase {
     return result;
   }
 
-  async update(id: string, data: ProjectCreate): Promise<Project> {
+  async updateProject(id: string, data: ProjectCreate): Promise<Project> {
     const project = await this.projectRepository.findProjectById(id);
 
     if (project.project?.userId === data.userId) {
-      const result = await this.projectRepository.update(id, data);
+      const result = await this.projectRepository.updateProject(id, data);
 
       if (!result) {
         throw new Error("Projeto não encontrado.");

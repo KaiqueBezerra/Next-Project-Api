@@ -7,7 +7,7 @@ import {
 } from "../interfaces/projects-interface";
 
 class ProjectRepositoryPrisma implements ProjectRepository {
-  async create(data: ProjectCreate): Promise<Project> {
+  async createProject(data: ProjectCreate): Promise<void> {
     const result = await prisma.project.create({
       data: {
         name: data.name,
@@ -17,8 +17,6 @@ class ProjectRepositoryPrisma implements ProjectRepository {
         phoneNumber: data.phoneNumber,
       },
     });
-
-    return result;
   }
 
   async findAllProject(
@@ -96,7 +94,10 @@ class ProjectRepositoryPrisma implements ProjectRepository {
     return result;
   }
 
-  async update(id: string, data: ProjectCreate): Promise<Project | null> {
+  async updateProject(
+    id: string,
+    data: ProjectCreate
+  ): Promise<Project | null> {
     const result = await prisma.project.update({
       where: { id },
       data: {

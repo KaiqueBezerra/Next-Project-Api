@@ -14,8 +14,8 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
       const { projectId } = request.params;
 
       try {
-        const result = await favoriteUseCase.addFavorite({ userId, projectId });
-        return reply.status(201).send(result);
+        await favoriteUseCase.addFavorite({ userId, projectId });
+        return reply.status(201).send();
       } catch (error) {
         return reply.status(500).send(error);
       }

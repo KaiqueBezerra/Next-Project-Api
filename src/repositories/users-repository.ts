@@ -7,16 +7,14 @@ import {
 } from "../interfaces/users-interface";
 
 class UserRepositoryPrisma implements UserRepository {
-  async createUser(data: UserCreate): Promise<User> {
-    const result = await prisma.user.create({
+  async createUser(data: UserCreate): Promise<void> {
+    await prisma.user.create({
       data: {
         name: data.name,
         email: data.email,
         password: data.password,
       },
     });
-
-    return result;
   }
 
   async findUserByEmail(email: string): Promise<User | null> {
@@ -64,6 +62,12 @@ class UserRepositoryPrisma implements UserRepository {
     });
 
     return result;
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    await prisma.user.delete({
+      where: { id },
+    });
   }
 }
 

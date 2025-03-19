@@ -24,7 +24,7 @@ export interface GetFavorite {
 }
 
 export interface FavoriteRepository {
-  addFavorite(data: AddFavorite): Promise<Favorite>;
+  addFavorite(data: AddFavorite): Promise<void>;
   deleteFavorite(data: AddFavorite): Promise<void>;
   findFavoritesByUserId(userId: string): Promise<GetFavorite[]>;
   favoritesVerify(userId: string, projectId: string): Promise<boolean>;
