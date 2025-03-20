@@ -97,11 +97,8 @@ class ProjectRepositoryPrisma implements ProjectRepository {
     return result;
   }
 
-  async updateProject(
-    id: string,
-    data: ProjectCreate
-  ): Promise<Project | null> {
-    const result = await prisma.project.update({
+  async updateProject(id: string, data: ProjectCreate): Promise<void> {
+    await prisma.project.update({
       where: { id },
       data: {
         name: data.name,
@@ -110,8 +107,12 @@ class ProjectRepositoryPrisma implements ProjectRepository {
         phoneNumber: data.phoneNumber,
       },
     });
+  }
 
-    return result;
+  async deleteProject(id: string, userId: string): Promise<void> {
+    await prisma.project.delete({
+      where: { id },
+    });
   }
 }
 

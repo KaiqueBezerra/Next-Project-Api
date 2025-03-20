@@ -97,16 +97,32 @@ export async function projectRoutes(fastify: FastifyInstance) {
     const { name, description, requirements, phoneNumber } = request.body;
 
     try {
-      const result = await projectUseCase.updateProject(id, {
+      await projectUseCase.updateProject(id, {
         name,
         description,
         requirements,
         phoneNumber,
         userId,
       });
-      return reply.status(200).send(result);
+      return reply.status(200).send();
     } catch (error) {
       return reply.status(500).send(error);
     }
   });
+
+  fastify.delete<{ Params: { id: string } }>(
+    "/:id",
+    { preHandler: authMiddleware },
+    async (request, reply) => {
+      const { id: userId } = request.user as { id: string };
+      const { id } = request.params;
+
+      try {
+        await projectUseCase.deleteProject(id, userId);
+        return reply.status(200).send();
+      } catch (error) {
+        return reply.status(500).send(error);
+      }
+    }
+  );
 }

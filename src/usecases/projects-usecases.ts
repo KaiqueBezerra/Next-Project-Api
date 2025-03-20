@@ -79,17 +79,29 @@ class ProjectUseCase {
     return result;
   }
 
-  async updateProject(id: string, data: ProjectCreate): Promise<Project> {
+  async updateProject(id: string, data: ProjectCreate): Promise<void> {
     const project = await this.projectRepository.findProjectById(id);
 
+    if (!project) {
+      throw new Error("Projeto não encontrado.");
+    }
+
     if (project.project?.userId === data.userId) {
-      const result = await this.projectRepository.updateProject(id, data);
+      await this.projectRepository.updateProject(id, data);
+    } else {
+      throw new Error("Usuário nao autorizado.");
+    }
+  }
 
-      if (!result) {
-        throw new Error("Projeto não encontrado.");
-      }
+  async deleteProject(id: string, userId: string): Promise<void> {
+    const project = await this.projectRepository.findProjectById(id);
 
-      return result;
+    if (!project) {
+      throw new Error("Projeto não encontrado.");
+    }
+
+    if (project.project?.userId === userId) {
+      await this.projectRepository.deleteProject(id, userId);
     } else {
       throw new Error("Usuário nao autorizado.");
     }
