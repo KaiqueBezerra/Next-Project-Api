@@ -24,12 +24,12 @@ export interface ProjectGet {
 
 export interface ProjectRepository {
   createProject(data: ProjectCreate): Promise<void>;
-  findAllProject(
+  findAllProjects(
     search: string,
     filter: string,
     page: number,
     limit: number
-  ): Promise<Project[] | null>;
+  ): Promise<Project[]>;
   findProjectById(id: string): Promise<ProjectGet>;
   findProjectByUserId(
     userId: string,

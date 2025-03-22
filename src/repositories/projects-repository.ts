@@ -8,7 +8,7 @@ import {
 
 class ProjectRepositoryPrisma implements ProjectRepository {
   async createProject(data: ProjectCreate): Promise<void> {
-    const result = await prisma.project.create({
+    await prisma.project.create({
       data: {
         name: data.name,
         description: data.description,
@@ -19,12 +19,12 @@ class ProjectRepositoryPrisma implements ProjectRepository {
     });
   }
 
-  async findAllProject(
+  async findAllProjects(
     search: string,
     filter: string,
     page: number,
     limit: number
-  ): Promise<Project[] | null> {
+  ): Promise<Project[]> {
     const whereCondition: any = {};
 
     // Verificar o parâmetro de filtro (filter)

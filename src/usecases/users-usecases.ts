@@ -18,7 +18,7 @@ class UserUseCase {
     const userVeriryExists = await this.userRepository.findUserByEmail(email);
 
     if (userVeriryExists) {
-      throw new Error("Usuário já existe.");
+      throw new Error("User already exists.");
     }
 
     const hashedPassword = await AuthService.hashPassword(password);
@@ -34,7 +34,7 @@ class UserUseCase {
     const result = await this.userRepository.findUserByEmail(email);
 
     if (!result) {
-      throw new Error("Usuário não encontrado.");
+      throw new Error("User not found.");
     }
 
     return result;
@@ -44,7 +44,7 @@ class UserUseCase {
     const result = await this.userRepository.findUserById(id);
 
     if (!result) {
-      throw new Error("Usuário não encontrado.");
+      throw new Error("User not found.");
     }
 
     return result;
@@ -54,7 +54,7 @@ class UserUseCase {
     const result = await this.userRepository.updateUser(id, name);
 
     if (!result) {
-      throw new Error("Usuário não encontrado.");
+      throw new Error("User not found.");
     }
 
     return result;
@@ -68,7 +68,7 @@ class UserUseCase {
     const user = await this.userRepository.findUserByEmail(email);
 
     if (!user) {
-      throw new Error("Email inválido.");
+      throw new Error("Invalid email.");
     }
 
     const isPasswordValid = await AuthService.comparePassword(
@@ -77,7 +77,7 @@ class UserUseCase {
     );
 
     if (!isPasswordValid) {
-      throw new Error("Senha inválida.");
+      throw new Error("Invalid password.");
     }
 
     return AuthService.generateToken(user.id);

@@ -29,16 +29,16 @@ class ProjectUseCase {
     });
   }
 
-  async findAllProject(
+  async findAllProjects(
     search: string,
     filter: string,
     page: string,
     limit: string
-  ): Promise<Project[] | null> {
+  ): Promise<Project[]> {
     const numberPage = Number(page);
     const numberLimit = Number(limit);
 
-    const result = await this.projectRepository.findAllProject(
+    const result = await this.projectRepository.findAllProjects(
       search,
       filter,
       numberPage,
@@ -51,8 +51,8 @@ class ProjectUseCase {
   async findProjectById(id: string): Promise<ProjectGet> {
     const result = await this.projectRepository.findProjectById(id);
 
-    if (!result) {
-      throw new Error("Projeto não encontrado.");
+    if (!result.project) {
+      throw new Error("Project not found.");
     }
 
     return result;
@@ -73,7 +73,7 @@ class ProjectUseCase {
     );
 
     if (!result) {
-      throw new Error("Projetos não encontrados.");
+      throw new Error("Projects not found.");
     }
 
     return result;
@@ -82,28 +82,28 @@ class ProjectUseCase {
   async updateProject(id: string, data: ProjectCreate): Promise<void> {
     const project = await this.projectRepository.findProjectById(id);
 
-    if (!project) {
-      throw new Error("Projeto não encontrado.");
+    if (!project.project) {
+      throw new Error("Project not found.");
     }
 
     if (project.project?.userId === data.userId) {
       await this.projectRepository.updateProject(id, data);
     } else {
-      throw new Error("Usuário nao autorizado.");
+      throw new Error("user not authorized.");
     }
   }
 
   async deleteProject(id: string, userId: string): Promise<void> {
     const project = await this.projectRepository.findProjectById(id);
 
-    if (!project) {
-      throw new Error("Projeto não encontrado.");
+    if (!project.project) {
+      throw new Error("Project not found.");
     }
 
     if (project.project?.userId === userId) {
       await this.projectRepository.deleteProject(id, userId);
     } else {
-      throw new Error("Usuário nao autorizado.");
+      throw new Error("user not authorized.");
     }
   }
 }

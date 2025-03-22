@@ -40,7 +40,7 @@ export async function projectRoutes(fastify: FastifyInstance) {
     const { search, filter, page, limit } = request.query;
 
     try {
-      const result = await projectUseCase.findAllProject(
+      const result = await projectUseCase.findAllProjects(
         search,
         filter,
         page,

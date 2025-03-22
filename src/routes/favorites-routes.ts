@@ -1,7 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { FavoriteUseCase } from "../usecases/favorites-usecases";
 import { authMiddleware } from "../middlewares/auth-middleware";
-import { AddFavorite } from "../interfaces/favorites-interface";
 
 export async function favoritesRoutes(fastify: FastifyInstance) {
   const favoriteUseCase = new FavoriteUseCase();
