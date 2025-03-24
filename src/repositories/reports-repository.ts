@@ -6,6 +6,7 @@ import {
 
 class ReportRepositoryPrisma implements ReportRepository {
   async createReport(data: ReportCreate): Promise<void> {
+
     await prisma.report.create({
       data: {
         comment: data.comment,

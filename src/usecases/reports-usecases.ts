@@ -20,7 +20,7 @@ class ReportUseCase {
     userId,
     projectId,
   }: ReportCreate): Promise<void> {
-    const project = await this.projectRepository.findProjectById(userId);
+    const project = await this.projectRepository.findProjectById(projectId);
 
     if (!project.project) {
       throw new Error("Project not found.");
