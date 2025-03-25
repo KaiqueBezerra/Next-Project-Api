@@ -58,7 +58,7 @@ class ProjectUseCase {
     return result;
   }
 
-  async findProjectByUserId(
+  async findProjectsByUserId(
     userId: string,
     page: string,
     limit: string
@@ -66,7 +66,28 @@ class ProjectUseCase {
     const numberPage = Number(page);
     const numberLimit = Number(limit);
 
-    const result = await this.projectRepository.findProjectByUserId(
+    const result = await this.projectRepository.findProjectsByUserId(
+      userId,
+      numberPage,
+      numberLimit
+    );
+
+    if (!result) {
+      throw new Error("Projects not found.");
+    }
+
+    return result;
+  }
+
+  async findProjectsByUserIdNoToken(
+    userId: string,
+    page: string,
+    limit: string
+  ): Promise<Project[]> {
+    const numberPage = Number(page);
+    const numberLimit = Number(limit);
+
+    const result = await this.projectRepository.findProjectsByUserIdNoToken(
       userId,
       numberPage,
       numberLimit

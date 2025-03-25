@@ -73,7 +73,28 @@ export async function projectRoutes(fastify: FastifyInstance) {
     const { page, limit } = request.query;
 
     try {
-      const result = await projectUseCase.findProjectByUserId(
+      const result = await projectUseCase.findProjectsByUserId(
+        userId,
+        page,
+        limit
+      );
+      return reply.status(200).send(result);
+    } catch (error) {
+      return reply.status(500).send(error);
+    }
+  });
+
+  fastify.get<{
+    Querystring: {
+      page: string;
+      limit: string;
+    };
+  }>("/user/:userId", async (request, reply) => {
+    const { userId } = request.params as { userId: string };
+    const { page, limit } = request.query;
+
+    try {
+      const result = await projectUseCase.findProjectsByUserIdNoToken(
         userId,
         page,
         limit

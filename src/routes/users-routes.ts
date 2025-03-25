@@ -22,7 +22,7 @@ export async function userRoutes(fastify: FastifyInstance) {
 
     try {
       const result = await userUseCase.findUserById(id);
-      return reply.status(201).send(result);
+      return reply.status(200).send(result);
     } catch (error) {
       return reply.status(500).send(error);
     }

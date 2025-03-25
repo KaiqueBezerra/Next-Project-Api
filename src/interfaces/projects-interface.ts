@@ -7,6 +7,9 @@ export interface Project {
   createdAt: Date;
   updatedAt: Date;
   userId: string;
+  User?: {
+    name: string;
+  };
 }
 
 export interface ProjectCreate {
@@ -31,7 +34,12 @@ export interface ProjectRepository {
     limit: number
   ): Promise<Project[]>;
   findProjectById(id: string): Promise<ProjectGet>;
-  findProjectByUserId(
+  findProjectsByUserId(
+    userId: string,
+    page: number,
+    limit: number
+  ): Promise<Project[]>;
+  findProjectsByUserIdNoToken(
     userId: string,
     page: number,
     limit: number

@@ -71,6 +71,21 @@ class ProjectRepositoryPrisma implements ProjectRepository {
   async findProjectById(id: string): Promise<ProjectGet> {
     const result = await prisma.project.findUnique({
       where: { id },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        requirements: true,
+        userId: true,
+        phoneNumber: true,
+        createdAt: true,
+        updatedAt: true,
+        User: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     const favoriteCount = await prisma.favorite.count({
@@ -80,7 +95,24 @@ class ProjectRepositoryPrisma implements ProjectRepository {
     return { project: result, favoriteCount };
   }
 
-  async findProjectByUserId(
+  async findProjectsByUserId(
+    userId: string,
+    page: number,
+    limit: number
+  ): Promise<Project[]> {
+    const result = await prisma.project.findMany({
+      where: { userId },
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return result;
+  }
+
+  async findProjectsByUserIdNoToken(
     userId: string,
     page: number,
     limit: number
