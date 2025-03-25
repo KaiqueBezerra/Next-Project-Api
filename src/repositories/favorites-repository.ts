@@ -1,7 +1,6 @@
 import { prisma } from "../db/prisma-client";
 import {
   AddFavorite,
-  Favorite,
   FavoriteRepository,
   GetFavorite,
 } from "../interfaces/favorites-interface";
