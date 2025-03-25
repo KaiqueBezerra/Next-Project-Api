@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-const SECRET_KEY = (process.env.JWT_SECRET as string) || "default_secret";
+const SECRET_KEY = (process.env.JWT_SECRET as string) || "super_secret";
 
 class AuthService {
   static async hashPassword(password: string): Promise<string> {
