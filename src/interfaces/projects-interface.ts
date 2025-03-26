@@ -44,6 +44,7 @@ export interface ProjectRepository {
     page: number,
     limit: number
   ): Promise<Project[]>;
+  getProjectsCountByUserId(userId: string): Promise<number>;
   updateProject(id: string, data: ProjectCreate): Promise<void>;
   deleteProject(id: string, userId: string): Promise<void>;
 }

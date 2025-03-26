@@ -129,6 +129,14 @@ class ProjectRepositoryPrisma implements ProjectRepository {
     return result;
   }
 
+  async getProjectsCountByUserId(userId: string): Promise<number> {
+    const result = await prisma.project.count({
+      where: { userId },
+    });
+
+    return result;
+  }
+
   async updateProject(id: string, data: ProjectCreate): Promise<void> {
     await prisma.project.update({
       where: { id },

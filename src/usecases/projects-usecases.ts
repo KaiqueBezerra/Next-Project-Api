@@ -100,6 +100,14 @@ class ProjectUseCase {
     return result;
   }
 
+  async getProjectsCountByUserId(userId: string): Promise<number> {
+    const result = await this.projectRepository.getProjectsCountByUserId(
+      userId
+    );
+
+    return result;
+  }
+
   async updateProject(id: string, data: ProjectCreate): Promise<void> {
     const project = await this.projectRepository.findProjectById(id);
 

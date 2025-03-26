@@ -105,6 +105,21 @@ export async function projectRoutes(fastify: FastifyInstance) {
     }
   });
 
+  fastify.get<{
+    Params: {
+      userId: string;
+    };
+  }>("/count/:userId", async (request, reply) => {
+    const { userId } = request.params;
+
+    try {
+      const result = await projectUseCase.getProjectsCountByUserId(userId);
+      return reply.status(200).send(result);
+    } catch (error) {
+      return reply.status(500).send(error);
+    }
+  });
+
   fastify.put<{
     Body: {
       name: string;
