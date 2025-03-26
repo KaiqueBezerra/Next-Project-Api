@@ -10,7 +10,9 @@ const app: FastifyInstance = fastify({
   logger: true,
 });
 
-app.register(fastifyCors, { origin: "*" });
+app.register(fastifyCors, {
+  origin: "https://next-project-kaique-bezerra.vercel.app/",
+});
 
 app.register(authRoutes, { prefix: "/auth" });
 app.register(userRoutes, { prefix: "/users" });
